@@ -28,20 +28,6 @@ public class Carro extends Veiculo implements Orcamento {
 
 
 
-    public int revisao (int quilometragem){
-        int revisoesRealizadas = 0;
-
-        if (quilometragem % 10000 == 0) {
-            revisoesRealizadas += 1;
-        }
-        if (quilometragem % 20000 == 0) {
-            revisoesRealizadas += 2;
-        }
-        if (quilometragem % 80000 == 0) {
-            revisoesRealizadas += 1;
-        }
-        return revisoesRealizadas;
-    }
 
     @Override
     public int revisao() {
