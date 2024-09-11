@@ -12,7 +12,6 @@ public class Funcionario {
         this.rm = rm;
     }
 
-
     public int getId() {
         return idFuncionario;
     }
@@ -36,4 +35,6 @@ public class Funcionario {
     public void setRm(int rm) {
         this.rm = rm;
     }
+
+
 }

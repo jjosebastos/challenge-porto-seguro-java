@@ -38,4 +38,5 @@ public class Carro extends Veiculo {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
+
 }
