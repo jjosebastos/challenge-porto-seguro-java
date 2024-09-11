@@ -2,14 +2,14 @@ package model;
 
 public class Endereco {
 
-    private long idEndereco;
+    private int idEndereco;
     private String rua;
     private String bairro;
     private String cidade;
     private String uf;
     private String cep;
 
-    public Endereco(long idEndereco, String rua, String bairro, String cidade, String uf, String cep) {
+    public Endereco(int idEndereco, String rua, String bairro, String cidade, String uf, String cep) {
         this.idEndereco = idEndereco;
         this.rua = rua;
         this.bairro = bairro;

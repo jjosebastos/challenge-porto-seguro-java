@@ -1,24 +1,29 @@
 package model;
 
 public class Veiculo {
-    private long idVeiculo;
+    private int idVeiculo;
     private String modelo;
     private String marca;
     private String chassi;
+    private String placa;
+    private int quilometragem;
 
 
-    public Veiculo(long idVeiculo, String chassi, String marca, String modelo) {
+
+    public Veiculo(int idVeiculo, String chassi, String marca, String modelo, String placa, int quilometragem) {
         this.idVeiculo = idVeiculo;
         this.chassi = chassi;
         this.marca = marca;
         this.modelo = modelo;
+        this.placa = placa;
+        this.quilometragem = quilometragem;
     }
 
     public long getIdVeiculo() {
         return idVeiculo;
     }
 
-    public void setId(long idVeiculo) {
+    public void setId(int idVeiculo) {
         this.idVeiculo = idVeiculo;
     }
 

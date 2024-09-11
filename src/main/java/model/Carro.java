@@ -2,46 +2,40 @@ package model;
 
 import java.util.List;
 
-public class Carro extends Veiculo implements Orcamento {
-    private double aroRoda;
-    private double quilometragem;
-    private String placa;
+public class Carro extends Veiculo {
+    private int numeroPortas;
+    private String cor;
+    private String categoria;
 
-    public Carro(long idVeiculo, String chassi, String marca, String modelo, double aroRoda, double quilometragem, String placa) {
-        super(idVeiculo, chassi, marca, modelo);
-        this.aroRoda = aroRoda;
-        this.quilometragem = quilometragem;
-        this.placa = placa;
+
+    public Carro(int idVeiculo, String chassi, String marca, String modelo, String placa, int quilometragem, int numeroPortas, String cor, String categoria) {
+        super(idVeiculo, chassi, marca, modelo, placa, quilometragem);
+        this.numeroPortas = numeroPortas;
+        this.cor = cor;
+        this.categoria = categoria;
     }
 
-    public double getAroRoda() {
-        return aroRoda;
+    public int getNumeroPortas() {
+        return numeroPortas;
     }
 
-    public double getQuilometragem() {
-        return quilometragem;
+    public void setNumeroPortas(int numeroPortas) {
+        this.numeroPortas = numeroPortas;
     }
 
-    public String getPlaca() {
-        return placa;
+    public String getCor() {
+        return cor;
     }
 
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
 
+    public String getCategoria() {
+        return categoria;
+    }
 
-
-    @Override
-    public int revisao() {
-        int revisoesRealizadas = 0;
-
-        if (quilometragem % 10000 == 0) {
-            revisoesRealizadas += 1;
-        }
-        if (quilometragem % 20000 == 0) {
-            revisoesRealizadas += 2;
-        }
-        if (quilometragem % 80000 == 0) {
-            revisoesRealizadas += 1;
-        }
-        return  revisoesRealizadas;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

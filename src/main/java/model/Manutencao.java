@@ -1,13 +1,13 @@
 package model;
 
 public class Manutencao {
-    private long idManutencao;
+    private int idManutencao;
     private Veiculo veiculo;
     private String descricao;
     private Endereco endereco;
     private Mecanico mecanico;
 
-    public Manutencao(long idManutencao, Veiculo veiculo, Mecanico mecanico, String descricao, Endereco endereco) {
+    public Manutencao(int idManutencao, Veiculo veiculo, Mecanico mecanico, String descricao, Endereco endereco) {
         this.idManutencao = idManutencao;
         this.veiculo = veiculo;
         this.mecanico = mecanico;

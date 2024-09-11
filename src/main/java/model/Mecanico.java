@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Mecanico extends Funcionario{
 
-    public Mecanico(long idFuncionario, String nome, int rm) {
+    public Mecanico(int idFuncionario, String nome, int rm) {
         super(idFuncionario, nome, rm);
     }
 

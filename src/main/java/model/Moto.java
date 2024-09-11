@@ -1,15 +1,14 @@
 package model;
 
-public class Moto extends Veiculo implements Orcamento{
+public class Moto extends Veiculo {
     private double aroRoda;
     private int cilindradas;
-    private int quilometragem;
 
-    public Moto(long idVeiculo, String chassi, String marca, String modelo, double aroRoda, int cilindradas, int quilometragem) {
-        super(idVeiculo, chassi, marca, modelo);
+    public Moto(int idVeiculo, String chassi, String marca, String modelo, String placa,
+                int quilometragem, double aroRoda, int cilindradas) {
+        super(idVeiculo, chassi, marca, modelo, placa, quilometragem);
         this.aroRoda = aroRoda;
         this.cilindradas = cilindradas;
-        this.quilometragem = quilometragem;
     }
 
     public double getAroRoda() {
@@ -28,27 +27,6 @@ public class Moto extends Veiculo implements Orcamento{
         this.cilindradas = cilindradas;
     }
 
-    public int getQuilometragem() {
-        return quilometragem;
-    }
 
-    public void setQuilometragem(int quilometragem) {
-        this.quilometragem = quilometragem;
-    }
 
-    @Override
-    public int revisao() {
-        int revisoesRealizadas = 0;
-
-        if (this.quilometragem % 10000 == 0) {
-            revisoesRealizadas += 1;
-        }
-        if (this.quilometragem % 50000 == 0) {
-            revisoesRealizadas += 2;
-        }
-        if (this.quilometragem % 30000 == 0) {
-            revisoesRealizadas += 1;
-        }
-        return revisoesRealizadas;
-    }
 }

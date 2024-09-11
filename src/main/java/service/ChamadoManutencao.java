@@ -18,7 +18,7 @@ public class ChamadoManutencao {
     }
 
 
-    public void adicionarNovaSolicitacao(Long id, Veiculo veiculo, Mecanico mecanico, String descricao, Endereco endereco){
+    public void adicionarNovaSolicitacao(int id, Veiculo veiculo, Mecanico mecanico, String descricao, Endereco endereco){
         listManutencao.add(new Manutencao(id, veiculo, mecanico, descricao, endereco));
     }
 

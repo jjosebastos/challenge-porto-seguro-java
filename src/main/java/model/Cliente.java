@@ -3,17 +3,17 @@ package model;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Cliente {
-    private long idCliente;
+public class Cliente extends Pessoa{
+    private int idCliente;
     private String email;
     private String cpf;
-    private String dataNascimento;
 
-    public Cliente(long idCliente, String email, String cpf, String dataNascimento) {
+    public Cliente(String nome, String dataNascimento, int idCliente, String email, String cpf) {
+        super(nome, dataNascimento);
         this.idCliente = idCliente;
         this.email = email;
         this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
+
     }
 
     public long getId() {
@@ -28,15 +28,9 @@ public class Cliente {
         return cpf;
     }
 
-    public String getDataNascimento() {
-        return dataNascimento;
-    }
 
-    public int calculoIdade(String dataNascimento){
-        LocalDate dataNasc = LocalDate.parse(dataNascimento);
-        LocalDate dataAtual = LocalDate.now();
 
-        Period periodo = Period.between(dataNasc, dataAtual);
-        return periodo.getYears();
-    }
+
+
+
 }

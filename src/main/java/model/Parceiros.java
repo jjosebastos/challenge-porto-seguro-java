@@ -1,11 +1,11 @@
 package model;
 
 public class Parceiros {
-    private long idParceiro;
+    private int idParceiro;
     private String cnpj;
     private int tipoParceiro;
 
-    public Parceiros(long idParceiro, String cnpj, int tipoParceiro) {
+    public Parceiros(int idParceiro, String cnpj, int tipoParceiro) {
         this.idParceiro = idParceiro;
         this.cnpj = cnpj;
         this.tipoParceiro = tipoParceiro;
@@ -15,7 +15,7 @@ public class Parceiros {
         return idParceiro;
     }
 
-    public void setIdParceiro(long idParceiro) {
+    public void setIdParceiro(int idParceiro) {
         this.idParceiro = idParceiro;
     }
 

@@ -6,7 +6,7 @@ public class Guincho extends Funcionario{
     private double localizacao;
     private Boolean status;
 
-    public Guincho(long idFuncionario, String nome, int rm, Veiculo veiculo, double localizacao, boolean status) {
+    public Guincho(int idFuncionario, String nome, int rm, Veiculo veiculo, double localizacao, boolean status) {
         super(idFuncionario, nome, rm);
         this.veiculo = veiculo;
         this.localizacao = localizacao;

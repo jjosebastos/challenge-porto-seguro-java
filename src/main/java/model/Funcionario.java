@@ -1,11 +1,11 @@
 package model;
 
 public class Funcionario {
-    private long idFuncionario;
+    private int idFuncionario;
     private String nome;
     private int rm;
 
-    public Funcionario(long idFuncionario, String nome, int rm) {
+    public Funcionario(int idFuncionario, String nome, int rm) {
         super();
         this.idFuncionario = idFuncionario;
         this.nome = nome;
@@ -13,11 +13,11 @@ public class Funcionario {
     }
 
 
-    public long getId() {
+    public int getId() {
         return idFuncionario;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.idFuncionario = idFuncionario;
     }
 
