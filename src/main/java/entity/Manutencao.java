@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 public class Manutencao {
     private int idManutencao;

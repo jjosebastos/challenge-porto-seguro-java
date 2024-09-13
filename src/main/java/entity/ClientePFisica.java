@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 import java.util.Objects;
 
@@ -8,8 +8,8 @@ public class ClientePFisica extends Pessoa{
     private String cpf;
     private String email;
 
-    public ClientePFisica(String nome, int idade, String email, String cpf) {
-        super(nome);
+    public ClientePFisica( int idade, String email, String cpf) {
+        super();
         this.email = email;
         setIdade(idade);
         this.cpf = cpf;

@@ -1,10 +1,10 @@
 package service;
 
 
-import model.Endereco;
-import model.Manutencao;
-import model.Mecanico;
-import model.Veiculo;
+import entity.Endereco;
+import entity.Manutencao;
+import entity.Mecanico;
+import entity.Veiculo;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,4 @@
-package model;
-
-import java.util.List;
+package entity;
 
 public class Carro extends Veiculo {
     private int numeroPortas;

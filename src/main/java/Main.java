@@ -1,20 +1,38 @@
 import config.DatabaseConfig;
-import dao.ClientePFisicaDAO;
-import dao.ClientePFisicaDAOImpl;
-import model.ClientePFisica;
+import dao.ClientePFisicaDao;
+import dao.ClientePFisicaDaoImpl;
+import dao.PessoaDaoImpl;
+import entity.Pessoa;
+import exception.PessoaDaoException;
+import exception.PessoaFisicaDaoException;
+import entity.ClientePFisica;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException,  PessoaDaoException {
+
         DatabaseConfig db = new DatabaseConfig("jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL",
         "rm559221","jn100800");
 
-        ClientePFisica cliPF = new ClientePFisica("Jose Bezerra", 23,"jose@mail.com", "400.000.999-00");
+        PessoaDaoImpl pessoaDao = new PessoaDaoImpl(db);
 
-        ClientePFisicaDAO clientePFDao = new ClientePFisicaDAOImpl(db.getConnection());
+        Pessoa pessoa2 = new Pessoa(30L, "José Bezerra");
+        pessoa2.setNome("José Bezerra Bastos Neto");
+        pessoaDao.update(pessoa2);
 
-        clientePFDao.create(cliPF);
+
+        pessoaDao.delete(30);
+
+        List<Pessoa> result = pessoaDao.readAll();
+        for (Pessoa p: result){
+            System.out.println(p.toString());
+        }
+
+
+
+
 
     }
 }

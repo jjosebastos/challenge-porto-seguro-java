@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 import java.util.Objects;
 
@@ -8,8 +8,8 @@ public class ClientePJuridica extends Pessoa{
     private String cnpj;
     private String inscricaoEstadual;
 
-    public ClientePJuridica(String nome, String razaoSocial, String cnpj, String inscricaoEstadual) {
-        super(nome);
+    public ClientePJuridica(String razaoSocial, String cnpj, String inscricaoEstadual) {
+        super();
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
         this.inscricaoEstadual = inscricaoEstadual;

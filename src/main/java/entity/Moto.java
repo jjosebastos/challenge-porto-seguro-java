@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 public class Moto extends Veiculo {
     private double aroRoda;
