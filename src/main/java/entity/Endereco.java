@@ -15,6 +15,7 @@ public class Endereco {
     private Integer idSeguradora;
     private Integer idAutorizada;
     private String cep;
+
     public Endereco(int idEndereco, String rua, String numeroCasa, String bairro, String cidade, String uf, String complemento, Integer idCliente, Integer idSeguradora, Integer idAutorizada, String cep) {
         this.idEndereco = idEndereco;
         this.rua = rua;

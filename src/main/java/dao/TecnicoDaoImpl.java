@@ -53,7 +53,7 @@ public class TecnicoDaoImpl implements TecnicoDao {
                 String nome = rs.getString("NM_TECNICO");
                 LocalDate dataNascimento = rs.getDate("DT_NASCIMENTO").toLocalDate();
                 String matricula = rs.getString("NR_REGISTRO_MATRICULA");
-                Integer idAutorizada = (Integer) rs.getObject("ID_AUTORIZADA");
+                int idAutorizada = rs.getInt("ID_AUTORIZADA");
 
                 result.add(new Tecnico(idTecnico, nome, dataNascimento, matricula, idAutorizada));
             }
@@ -71,11 +71,11 @@ public class TecnicoDaoImpl implements TecnicoDao {
         try {
             Connection connection = db.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
-
+            connection.setAutoCommit(false);
             pstmt.setString(1, tecnico.getNome());
             pstmt.setDate(2, Date.valueOf(tecnico.getDataNascimento()));
             pstmt.setString(3, tecnico.getMatricula());
-            pstmt.setObject(4, tecnico.getIdAutorizada(), Types.INTEGER);
+            pstmt.setInt(4, tecnico.getIdAutorizada());
             pstmt.setInt(5, tecnico.getIdTecnico());
             pstmt.executeUpdate();
             connection.commit();
@@ -91,7 +91,7 @@ public class TecnicoDaoImpl implements TecnicoDao {
         try {
             Connection connection = db.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);
-
+            connection.setAutoCommit(false);
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
             connection.commit();

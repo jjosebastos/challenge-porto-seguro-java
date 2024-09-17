@@ -1,24 +1,25 @@
 package dao;
 
-import entity.ClientePFisica;
 import entity.Veiculo;
-import exception.PessoaFisicaDaoException;
+import exception.VeiculoDaoException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface VeiculoDao {
 
     //TODO: CREATE
-    void create(Veiculo veiculo) throws SQLException;
+    void create(Veiculo veiculo) throws VeiculoDaoException;
 
     //TODO: READ
-    List<Veiculo> readAll() throws SQLException;
+    List<Veiculo> readAll() throws VeiculoDaoException;
 
     //TODO: UPDATE
-    void update(Veiculo veiculo) throws  SQLException;
+    void update(Veiculo veiculo) throws  VeiculoDaoException;
 
     //TODO: DELETE
-    void delete(int id) throws  SQLException;
+    void delete(int id) throws  VeiculoDaoException;
+
+    class ClienteDao {
+    }
 }
 
