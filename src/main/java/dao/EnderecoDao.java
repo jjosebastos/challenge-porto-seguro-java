@@ -1,9 +1,7 @@
 package dao;
 
-import entity.ClientePFisica;
 import entity.Endereco;
 import exception.EnderecoDaoException;
-import exception.PessoaFisicaDaoException;
 
 import java.sql.SQLException;
 import java.util.List;

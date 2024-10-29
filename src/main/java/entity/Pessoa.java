@@ -1,38 +1,37 @@
 package entity;
 
+import java.time.LocalDate;
+
 public class Pessoa {
-    private long id;
-    private String nome;
+    private int idCliente;
+    private String tipoCliente;
+    private String status;
 
-    public Pessoa(){}
-
-    public Pessoa(long id, String nome) {
+    public Pessoa(int idCliente, String tipoCliente, String status) {
         super();
-        this.id = id;
-        this.nome = nome;
-
+        this.idCliente = idCliente;
+        this.tipoCliente = tipoCliente;
+        this.status = status;
     }
 
-    public long getId() {
-        return id;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getTipoCliente() {
+        return tipoCliente;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public String getStatus() {
+        return status;
     }
 
     @Override
     public String toString() {
         return "Pessoa{" +
-                "nome='" + nome + '\'' +
+                "idCliente=" + idCliente +
+                ", tipoCliente='" + tipoCliente + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

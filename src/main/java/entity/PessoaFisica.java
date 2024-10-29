@@ -2,14 +2,14 @@ package entity;
 
 import java.util.Objects;
 
-public class ClientePFisica extends Pessoa{
+public class PessoaFisica extends Pessoa{
 
     private int idade;
     private String cpf;
     private String email;
 
-    public ClientePFisica( int idade, String email, String cpf) {
-        super();
+    public PessoaFisica(int idCliente, String tipoCliente, String status, int idade, String email, String cpf) {
+        super(idCliente, tipoCliente, status);
         this.email = email;
         setIdade(idade);
         this.cpf = cpf;
@@ -45,7 +45,7 @@ public class ClientePFisica extends Pessoa{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ClientePFisica that = (ClientePFisica) o;
+        PessoaFisica that = (PessoaFisica) o;
         return idade == that.idade && Objects.equals(cpf, that.cpf) && Objects.equals(email, that.email);
     }
 

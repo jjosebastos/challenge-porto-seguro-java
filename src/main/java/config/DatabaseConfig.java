@@ -4,28 +4,23 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConfig {
+final class DatabaseConfig {
 
-    private final String url;
-    private final String user;
-    private final String password;
-
-    public DatabaseConfig(String url, String user, String password) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
+    private DatabaseConfig() {
+        throw new UnsupportedOperationException();
     }
 
-    public DatabaseConfig() {
-
+    static String getUrl(){
+        return "jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL";
     }
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, user, password);
+    static String getUser(){
+        return "rm559221";
     }
 
-
-
+    static String getPassword(){
+        return "jn100800";
+    }
 
 
 }

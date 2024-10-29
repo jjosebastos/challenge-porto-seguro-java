@@ -1,7 +1,7 @@
 package dao;
 
 import config.DatabaseConfig;
-import entity.Cliente;
+import entity.Pessoa;
 import exception.ClienteDaoException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ClienteDaoImplTest {
 
     private Connection connection;
-    private ClienteDao clienteDao;
+    private PessoaDao clienteDao;
 
     @BeforeEach
     public void setUp() throws SQLException {
@@ -28,7 +28,7 @@ public class ClienteDaoImplTest {
                 return connection;
             }
         };
-        clienteDao = new ClienteDaoImpl(dbConfig);
+        clienteDao = new PessoaDaoImpl(dbConfig);
 
         // Criação da tabela Cliente
         try (Statement stmt = connection.createStatement()) {
@@ -52,9 +52,9 @@ public class ClienteDaoImplTest {
 
     @Test
     public void testCreate() throws SQLException, ClienteDaoException {
-        Cliente cliente = new Cliente(1, "João da Silva", LocalDate.of(1985, 5, 15), "12345678901", "Masculino");
+        Pessoa pessoa = new Pessoa(1, "João da Silva", LocalDate.of(1985, 5, 15), "12345678901", "Masculino");
 
-        clienteDao.create(cliente);
+        clienteDao.create(pessoa);
 
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM CLIENTE WHERE ID_CLIENTE = 1")) {
@@ -77,23 +77,23 @@ public class ClienteDaoImplTest {
                     "VALUES (2, 'Maria Oliveira', '1990-12-01', '09876543210', 'Feminino')");
         }
 
-        List<Cliente> clientes = clienteDao.readAll();
+        List<Pessoa> pessoas = clienteDao.readAll();
 
-        assertEquals(2, clientes.size());
+        assertEquals(2, pessoas.size());
 
-        Cliente cliente1 = clientes.get(0);
-        assertEquals(1, cliente1.getIdCliente());
-        assertEquals("João da Silva", cliente1.getNome());
-        assertEquals(LocalDate.of(1985, 5, 15), cliente1.getDataNascimento());
-        assertEquals("12345678901", cliente1.getCpf());
-        assertEquals("Masculino", cliente1.getDsGenero());
+        Pessoa pessoa1 = pessoas.get(0);
+        assertEquals(1, pessoa1.getIdCliente());
+        assertEquals("João da Silva", pessoa1.getNome());
+        assertEquals(LocalDate.of(1985, 5, 15), pessoa1.getDataNascimento());
+        assertEquals("12345678901", pessoa1.getCpf());
+        assertEquals("Masculino", pessoa1.getDsGenero());
 
-        Cliente cliente2 = clientes.get(1);
-        assertEquals(2, cliente2.getIdCliente());
-        assertEquals("Maria Oliveira", cliente2.getNome());
-        assertEquals(LocalDate.of(1990, 12, 1), cliente2.getDataNascimento());
-        assertEquals("09876543210", cliente2.getCpf());
-        assertEquals("Feminino", cliente2.getDsGenero());
+        Pessoa pessoa2 = pessoas.get(1);
+        assertEquals(2, pessoa2.getIdCliente());
+        assertEquals("Maria Oliveira", pessoa2.getNome());
+        assertEquals(LocalDate.of(1990, 12, 1), pessoa2.getDataNascimento());
+        assertEquals("09876543210", pessoa2.getCpf());
+        assertEquals("Feminino", pessoa2.getDsGenero());
     }
 
     @Test
@@ -104,8 +104,8 @@ public class ClienteDaoImplTest {
                     "VALUES (1, 'João da Silva', '1985-05-15', '12345678901', 'Masculino')");
         }
 
-        Cliente cliente = new Cliente(1, "João da Silva Atualizado", LocalDate.of(1985, 5, 15), "12345678901", "Masculino");
-        clienteDao.update(cliente);
+        Pessoa pessoa = new Pessoa(1, "João da Silva Atualizado", LocalDate.of(1985, 5, 15), "12345678901", "Masculino");
+        clienteDao.update(pessoa);
 
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM CLIENTE WHERE ID_CLIENTE = 1")) {
