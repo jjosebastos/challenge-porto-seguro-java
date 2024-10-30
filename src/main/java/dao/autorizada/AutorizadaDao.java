@@ -2,6 +2,7 @@ package dao;
 
 import entity.Autorizada;
 import exception.AutorizadaDaoException;
+import exception.AutorizadaNotFoundException;
 import exception.AutorizadaNotSavedException;
 
 import java.sql.Connection;
@@ -12,6 +13,6 @@ public interface AutorizadaDao {
 
     Autorizada save (Autorizada autorizada, Connection connection) throws AutorizadaNotSavedException, SQLException;
     List<Autorizada> readAll() ;
-    void update(Autorizada Autorizada) throws AutorizadaDaoException;
-    void deleteById(int id) throws AutorizadaDaoException;
+    void update(Autorizada Autorizada) throws AutorizadaNotFoundException, SQLException;
+    void deleteById(int id) throws AutorizadaNotFoundException, SQLException;
 }
