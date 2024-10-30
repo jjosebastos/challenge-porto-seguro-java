@@ -1,8 +1,8 @@
-package dao;
+package dao.autorizada;
 
 import config.DatabaseConnectionFactory;
 import entity.Autorizada;
-import exception.AutorizadaDaoException;
+import exception.AutorizadaNotFoundException;
 import exception.AutorizadaNotSavedException;
 import oracle.jdbc.OracleType;
 
@@ -15,11 +15,11 @@ public class AutorizadaDaoImpl implements AutorizadaDao {
 
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
+
     @Override
     public Autorizada save(Autorizada autorizada, Connection connection) throws AutorizadaNotSavedException, SQLException {
-        final String sql = "BEGIN INSERT INTO T_CON_AUTORIZADA (NM_AUTORIZADA, NR_CNPJ) VALUES (?, ?, ?) RETURNING ID_AUTORIZADA INTO ?; END;";
+        final String sql = "BEGIN INSERT INTO T_CON_AUTORIZADA(NM_AUTORIZADA, NR_CNPJ) VALUES (?, ?) RETURNING ID INTO ?; END;";
         CallableStatement call = connection.prepareCall(sql);
-        connection.setAutoCommit(false);
         call.setString(1, autorizada.getNome());
         call.setString(2, autorizada.getCnpj());
         call.registerOutParameter(3, OracleType.NUMBER);
@@ -29,62 +29,54 @@ public class AutorizadaDaoImpl implements AutorizadaDao {
         if(linhasAlteradas == 0 || id == 0){
             throw new AutorizadaNotSavedException();
         }
-        autorizada.setIdAutorizada(id);
-        return pessoa;
-  }
+        return autorizada;
+    }
 
     @Override
     public List<Autorizada> readAll() {
-        List<Autorizada> result = new ArrayList<>();
-        String sql = "SELECT * FROM T_CON_AUTORIZADA";
+        final List<Autorizada> all = new ArrayList<>();
+        final String sql = "SELECT * FROM T_CON_AUTORIZADA";
+        try (Connection conn = DatabaseConnectionFactory.create().get()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()){
+                Autorizada autorizada = new Autorizada(
+                        resultSet.getLong("id_autorizada"),
+                        resultSet.getString("nm_autorizada"),
+                        resultSet.getString("nr_cnpj"));
+                all.add(autorizada);
 
-        try (Connection connection = db.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            while (rs.next()) {
-                int idAutorizada = rs.getInt("ID_AUTORIZADA");
-                String nome = rs.getString("NM_AUTORIZADA");
-                String cnpj = rs.getString("NR_CNPJ");
-
-                result.add(new Autorizada(idAutorizada, nome, cnpj));
             }
         } catch (SQLException e) {
-            logger.warning("não foi possível localizar nenhum registro de pessoa: "+e.getMessage());
+            logger.info("nenhum registro encontrado em t_con_autorizada");
         }
-
-        return result;
+        return all;
     }
 
     @Override
-    public void update(Autorizada autorizada) throws AutorizadaDaoException {
-        String sql = "UPDATE T_CON_AUTORIZADA SET NM_AUTORIZADA = ?, NR_CNPJ = ? WHERE ID_AUTORIZADA = ?";
-        try {
-            Connection connection = db.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1, autorizada.getNome());
-            pstmt.setString(2, autorizada.getCnpj());
-            pstmt.setInt(3, autorizada.getIdAutorizada());
-            pstmt.executeUpdate();
-            connection.commit();
-            connection.close();
-        } catch (SQLException e) {
-            throw new AutorizadaDaoException("Nenhum dado atualizado na T_AUTORIZADA");
+    public Autorizada update(Autorizada autorizada, Connection connection) throws AutorizadaNotFoundException, SQLException {
+        final String sql = "UPDATE T_CON_AUTORIZADA set nm_autorizada = ?, nr_cnpj = ? WHERE id_autorizada = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, autorizada.getNome());
+        stmt.setString(2, autorizada.getCnpj());
+        stmt.setLong(3, autorizada.getIdAutorizada());
+        int linhasAlteradas = stmt.executeUpdate();
+
+        if(linhasAlteradas == 0){
+            throw new AutorizadaNotFoundException();
         }
+
+        return autorizada;
     }
 
     @Override
-    public void deleteById(int id) throws AutorizadaDaoException {
-        String sql = "DELETE FROM T_CON_AUTORIZADA WHERE ID_AUTORIZADA = ?";
-
-        try (Connection connection = db.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)){
-            connection.setAutoCommit(false);
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            throw new AutorizadaDaoException("Nenhum dado excluído da T_CON_AUTORIZADA");
+    public void deleteById(Long id, Connection connection) throws AutorizadaNotFoundException, SQLException {
+        final String sql = "delete from t_con_autorizada where id_pessoa = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setLong(1, id);
+        int linhasAlteradas = stmt.executeUpdate();
+        if(linhasAlteradas == 0){
+            throw new AutorizadaNotFoundException();
         }
     }
 }

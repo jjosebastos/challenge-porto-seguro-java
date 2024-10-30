@@ -1,22 +1,26 @@
-package dao;
+package dao.endereco;
 
 import entity.Endereco;
 import exception.EnderecoDaoException;
+import exception.EnderecoNotFoundException;
+import exception.EnderecoNotSavedException;
+import exception.UnsupportedServiceOperationException;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public interface EnderecoDao {
 
     //TODO: CREATE
-    void create(Endereco endereco) throws EnderecoDaoException;
+    Endereco create(Endereco endereco, Connection connection) throws UnsupportedServiceOperationException, SQLException, EnderecoNotSavedException;
 
     //TODO: READ
-    List<Endereco> readAll() throws SQLException, EnderecoDaoException;
+    List<Endereco> readAll();
 
     //TODO: UPDATE
-    void update(Endereco endereco) throws EnderecoDaoException;
+    void update(Endereco endereco, Connection connection) throws SQLException, EnderecoNotFoundException;
 
     //TODO: DELETE
-    void delete(int id) throws EnderecoDaoException;
+    void delete(int id, Connection connection) throws SQLException, EnderecoNotFoundException;
 }

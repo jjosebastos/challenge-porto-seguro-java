@@ -3,17 +3,17 @@ package entity;
 import java.util.Objects;
 
 public class Autorizada {
-    private long idAutorizada;
+    private Long idAutorizada;
     private String nome;
     private String cnpj;
 
-    public Autorizada(long idAutorizada, String nome, String cnpj) {
+    public Autorizada(Long idAutorizada, String nome, String cnpj) {
         this.idAutorizada = idAutorizada;
         this.nome = nome;
         setCnpj(cnpj);
     }
 
-    public long getIdAutorizada() {
+    public Long getIdAutorizada() {
         return idAutorizada;
     }
 

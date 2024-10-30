@@ -1,7 +1,6 @@
-package dao;
+package dao.autorizada;
 
 import entity.Autorizada;
-import exception.AutorizadaDaoException;
 import exception.AutorizadaNotFoundException;
 import exception.AutorizadaNotSavedException;
 
@@ -13,6 +12,6 @@ public interface AutorizadaDao {
 
     Autorizada save (Autorizada autorizada, Connection connection) throws AutorizadaNotSavedException, SQLException;
     List<Autorizada> readAll() ;
-    void update(Autorizada Autorizada) throws AutorizadaNotFoundException, SQLException;
-    void deleteById(int id) throws AutorizadaNotFoundException, SQLException;
+    Autorizada update(Autorizada Autorizada, Connection connection) throws AutorizadaNotFoundException, SQLException;
+    void deleteById(Long id, Connection connection) throws AutorizadaNotFoundException, SQLException;
 }

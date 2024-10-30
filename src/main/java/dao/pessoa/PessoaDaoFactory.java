@@ -1,4 +1,4 @@
-package dao;
+package dao.pessoa;
 
 public class PessoaDaoFactory {
     private PessoaDaoFactory(){}

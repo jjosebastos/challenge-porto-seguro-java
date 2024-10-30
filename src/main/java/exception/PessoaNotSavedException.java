@@ -1,5 +1,5 @@
 package exception;
 
-public class PessoaDaoNotSavedException extends Exception {
+public class PessoaNotSavedException extends Exception {
 
 }

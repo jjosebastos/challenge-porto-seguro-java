@@ -3,33 +3,45 @@ package entity;
 import java.time.LocalDate;
 
 public class Pessoa {
-    private int idCliente;
+    private Long idPessoa;
     private String tipoCliente;
     private String status;
 
-    public Pessoa(int idCliente, String tipoCliente, String status) {
+    public Pessoa(Long idPessoa, String tipoCliente, String status) {
         super();
-        this.idCliente = idCliente;
+        this.idPessoa = idPessoa;
         this.tipoCliente = tipoCliente;
         this.status = status;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public Long getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(Long idPessoa) {
+        this.idPessoa = idPessoa;
     }
 
     public String getTipoCliente() {
         return tipoCliente;
     }
 
+    public void setTipoCliente(String tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
         return "Pessoa{" +
-                "idCliente=" + idCliente +
+                "idCliente=" + idPessoa +
                 ", tipoCliente='" + tipoCliente + '\'' +
                 ", status='" + status + '\'' +
                 '}';

@@ -1,18 +1,22 @@
 package entity;
 
+import java.util.InvalidPropertiesFormatException;
 import java.util.Objects;
 
 public class PessoaJuridica extends Pessoa{
-
     private  String razaoSocial;
     private String cnpj;
-    private String inscricaoEstadual;
+    private String nomeFantasia;
 
-    public PessoaJuridica(int idCliente, String tipoCliente, String status,String razaoSocial, String cnpj, String inscricaoEstadual) {
-        super(idCliente, tipoCliente, status);
+    public PessoaJuridica(Long idPessoa, String tipoCliente, String status, String cnpj, String razaoSocial, String nomeFantasia) {
+        super(idPessoa, tipoCliente, status);
         this.razaoSocial = razaoSocial;
-        this.cnpj = cnpj;
-        this.inscricaoEstadual = inscricaoEstadual;
+        setCnpj(cnpj);
+        this.nomeFantasia = nomeFantasia;
+    }
+
+    public boolean isCnpjValido(String cnpj){
+        return cnpj.length() == 18;
     }
 
     public String getRazaoSocial() {
@@ -28,15 +32,29 @@ public class PessoaJuridica extends Pessoa{
     }
 
     public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+        if(isCnpjValido(cnpj)){
+            this.cnpj = cnpj;
+        } else {
+            throw new RuntimeException();
+        }
+
     }
 
-    public String getInscricaoEstadual() {
-        return inscricaoEstadual;
+    public String getNomeFantasia() {
+        return nomeFantasia;
     }
 
-    public void setInscricaoEstadual(String inscricaoEstadual) {
-        this.inscricaoEstadual = inscricaoEstadual;
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
+    }
+
+    @Override
+    public String toString() {
+        return "PessoaJuridica{" +
+                "razaoSocial='" + razaoSocial + '\'' +
+                ", cnpj='" + cnpj + '\'' +
+                ", nomeFantasia='" + nomeFantasia + '\'' +
+                '}';
     }
 
     @Override
@@ -44,20 +62,11 @@ public class PessoaJuridica extends Pessoa{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PessoaJuridica that = (PessoaJuridica) o;
-        return Objects.equals(razaoSocial, that.razaoSocial) && Objects.equals(cnpj, that.cnpj) && Objects.equals(inscricaoEstadual, that.inscricaoEstadual);
+        return Objects.equals(razaoSocial, that.razaoSocial) && Objects.equals(cnpj, that.cnpj) && Objects.equals(nomeFantasia, that.nomeFantasia);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(razaoSocial, cnpj, inscricaoEstadual);
-    }
-
-    @Override
-    public String toString() {
-        return "ClientePJuridica{" +
-                "razaoSocial='" + razaoSocial + '\'' +
-                ", cnpj='" + cnpj + '\'' +
-                ", inscricaoEstadual='" + inscricaoEstadual + '\'' +
-                '}';
+        return Objects.hash(razaoSocial, cnpj, nomeFantasia);
     }
 }
