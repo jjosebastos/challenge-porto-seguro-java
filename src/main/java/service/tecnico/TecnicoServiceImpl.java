@@ -1,4 +1,4 @@
-package service;
+package service.tecnico;
 
 import config.DatabaseConnectionFactory;
 import dao.tecnico.TecnicoDao;
@@ -10,7 +10,6 @@ import exception.UnsupportedServiceOperationException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.List;
 
 public class TecnicoServiceImpl implements TecnicoService {

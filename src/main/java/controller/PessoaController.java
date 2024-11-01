@@ -1,13 +1,12 @@
 package controller;
 
-import dtos.AutorizadaDto;
 import dtos.PessoaDto;
 import entity.Pessoa;
 import exception.PessoaNotFoundException;
 import exception.PessoaNotSavedException;
 import exception.UnsupportedServiceOperationException;
-import service.PessoaService;
-import service.PessoaServiceFactory;
+import service.pessoa.PessoaService;
+import service.pessoa.PessoaServiceFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -35,14 +34,14 @@ public class PessoaController {
                         .build();
 
             } catch (SQLException | PessoaNotSavedException e){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity(Map.of("mensagem", "erro inesperado ao tentar inserir pessoa")).build();
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(Map.of("mensagem", "esse método só permite a inserção de novas pessoas")).build();
             }
         } else {
-            return Response.status(Response.Status.BAD_REQUEST)
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(Map.of(
                         "mensagem",
-                    "esse método só permite a criação de novas pessoas"))
+                    "erro inesperado ao tentar inserir pessoa"))
                     .build();
         }
     }

@@ -1,12 +1,10 @@
-package service;
+package service.pessoa;
 
 import entity.Pessoa;
-import exception.ClienteDaoException;
 import exception.PessoaNotFoundException;
 import exception.PessoaNotSavedException;
 import exception.UnsupportedServiceOperationException;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 

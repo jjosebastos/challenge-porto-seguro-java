@@ -3,32 +3,16 @@ package entity;
 import java.util.Objects;
 
 public class Seguradora {
-    private int idSeguradora;
+    private Long idSeguradora;
     private String nome;
     private String cnpj;
-    private int idVeiculo;
+    private Long idVeiculo;
 
-    public Seguradora(int idSeguradora, String nome, String cnpj, int idVeiculo) {
+    public Seguradora(Long idSeguradora, String nome, String cnpj, Long idVeiculo) {
         this.idSeguradora = idSeguradora;
         this.nome = nome;
-        setCnpj(cnpj);
+        this.cnpj = cnpj;
         this.idVeiculo = idVeiculo;
-    }
-
-    public boolean isCnpjValido(String cnpj){
-        if(cnpj.length() == 14){
-            return true;
-        } else {
-            throw new RuntimeException("CNPJ inválido.");
-        }
-    }
-
-    public int getIdSeguradora() {
-        return idSeguradora;
-    }
-
-    public void setIdSeguradora(int idSeguradora) {
-        this.idSeguradora = idSeguradora;
     }
 
     public String getNome() {
@@ -39,40 +23,48 @@ public class Seguradora {
         this.nome = nome;
     }
 
+    public Long getIdSeguradora() {
+        return idSeguradora;
+    }
+
+    public void setIdSeguradora(Long idSeguradora) {
+        this.idSeguradora = idSeguradora;
+    }
+
+    public Long getIdVeiculo() {
+        return idVeiculo;
+    }
+
+    public void setIdVeiculo(Long idVeiculo) {
+        this.idVeiculo = idVeiculo;
+    }
+
+    public boolean isCnpjValido(String cnpj) {
+        if (cnpj.length() == 14) {
+            return true;
+        } else {
+            throw new RuntimeException("CNPJ inválido.");
+        }
+    }
+
     public String getCnpj() {
         return cnpj;
     }
 
     public void setCnpj(String cnpj) {
-        if(isCnpjValido(cnpj)){
+        if (isCnpjValido(cnpj)) {
             this.cnpj = cnpj;
         }
     }
 
-    public int getIdVeiculo() {
-        return idVeiculo;
-    }
-    public void setIdVeiculo(int idVeiculo) {
-        this.idVeiculo = idVeiculo;
-    }
 
-    @Override
-    public String toString() {
-        return "Seguradora{" +
-                "idSeguradora=" + idSeguradora +
-                ", nome='" + nome + '\'' +
-                ", cnpj='" + cnpj + '\'' +
-                ", idVeiculo=" + idVeiculo +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Seguradora that = (Seguradora) o;
-        return idSeguradora == that.idSeguradora && idVeiculo == that.idVeiculo && Objects.equals(nome, that.nome) && Objects.equals(cnpj, that.cnpj);
+        return Objects.equals(idSeguradora, that.idSeguradora) && Objects.equals(nome, that.nome) && Objects.equals(cnpj, that.cnpj) && Objects.equals(idVeiculo, that.idVeiculo);
     }
 
     @Override

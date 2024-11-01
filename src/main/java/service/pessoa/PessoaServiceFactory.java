@@ -1,6 +1,4 @@
-package service;
-
-import entity.PessoaFisica;
+package service.pessoa;
 
 public class PessoaServiceFactory {
     private PessoaServiceFactory() {}

@@ -1,4 +1,4 @@
-package service;
+package service.pessoa;
 
 import config.DatabaseConnectionFactory;
 import dao.pessoa.PessoaDao;

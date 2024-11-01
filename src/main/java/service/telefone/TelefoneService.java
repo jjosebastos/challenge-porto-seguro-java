@@ -1,4 +1,4 @@
-package service;
+package service.telefone;
 
 import entity.Telefone;
 import exception.TelefoneNotFoundException;

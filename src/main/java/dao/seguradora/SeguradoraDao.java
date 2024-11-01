@@ -2,21 +2,19 @@ package dao.seguradora;
 
 import entity.Seguradora;
 import exception.SeguradoraDaoException;
+import exception.SeguradoraNotFoundException;
+import exception.SeguradoraNotSavedException;
+import exception.UnsupportedServiceOperationException;
+import oracle.jdbc.internal.OracleStatement;
 
+import javax.ws.rs.container.ConnectionCallback;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public interface SeguradoraDao {
-
-    //TODO: CREATE
-    void create(Seguradora seguradora) throws SeguradoraDaoException;
-
-    //TODO: READ
-    List<Seguradora> readAll() throws SQLException, SeguradoraDaoException;
-
-    //TODO: UPDATE
-    void update(Seguradora Seguradora) throws SeguradoraDaoException;
-
-    //TODO: DELETE
-    void delete(int id) throws SeguradoraDaoException;
+    Seguradora create(Seguradora seguradora, Connection connection) throws SeguradoraNotSavedException, SQLException, UnsupportedServiceOperationException;
+    List<Seguradora> readAll();
+    void update(Seguradora Seguradora, Connection connection) throws SeguradoraNotFoundException, SQLException;
+    void deleteById(Long id, Connection connection) throws SQLException, SeguradoraNotFoundException;
 }

@@ -1,11 +1,8 @@
-package service;
+package service.autorizada;
 
 import entity.Autorizada;
-import entity.Pessoa;
-import entity.PessoaFisica;
 import exception.AutorizadaNotFoundException;
 import exception.AutorizadaNotSavedException;
-import exception.ClienteDaoException;
 import exception.UnsupportedServiceOperationException;
 
 import java.sql.SQLException;

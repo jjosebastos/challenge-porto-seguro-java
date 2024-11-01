@@ -1,19 +1,16 @@
 package controller;
 
 import dtos.TecnicoDto;
-import entity.Pessoa;
 import entity.Tecnico;
-import exception.PessoaNotFoundException;
 import exception.TecnicoNotFoundException;
 import exception.TecnicoNotSavedException;
 import exception.UnsupportedServiceOperationException;
-import service.TecnicoService;
-import service.TecnicoServiceFactory;
+import service.tecnico.TecnicoService;
+import service.tecnico.TecnicoServiceFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.awt.*;
 import java.sql.SQLException;
 import java.util.Map;
 

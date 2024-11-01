@@ -1,4 +1,4 @@
-package service;
+package service.autorizada;
 
 import config.DatabaseConnectionFactory;
 import dao.autorizada.AutorizadaDao;

@@ -1,6 +1,5 @@
-package service;
+package service.historico;
 
-import entity.Autorizada;
 import entity.HistoricoVeiculo;
 import exception.*;
 

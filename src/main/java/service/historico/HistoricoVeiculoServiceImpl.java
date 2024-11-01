@@ -1,16 +1,13 @@
-package service;
+package service.historico;
 
 import config.DatabaseConnectionFactory;
 import dao.historicoVeiculo.HistoricoVeiculoDao;
 import dao.historicoVeiculo.HistoricoVeiculoFactory;
-import entity.Autorizada;
 import entity.HistoricoVeiculo;
-import exception.AutorizadaNotSavedException;
 import exception.HistoricoVeiculoNotFoundException;
 import exception.HistoricoVeiculoNotSavedException;
 import exception.UnsupportedServiceOperationException;
 
-import javax.naming.OperationNotSupportedException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;

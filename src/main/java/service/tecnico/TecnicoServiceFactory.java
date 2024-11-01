@@ -1,4 +1,4 @@
-package service;
+package service.tecnico;
 
 public class TecnicoServiceFactory {
     private TecnicoServiceFactory(){

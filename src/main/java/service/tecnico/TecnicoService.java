@@ -1,4 +1,4 @@
-package service;
+package service.tecnico;
 
 import entity.Tecnico;
 import exception.TecnicoNotFoundException;

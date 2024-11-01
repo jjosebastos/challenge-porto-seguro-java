@@ -1,99 +1,92 @@
 package dao.seguradora;
 
-import config.DatabaseConfig;
+
+import config.DatabaseConnectionFactory;
 import entity.Seguradora;
 import exception.SeguradoraDaoException;
+import exception.SeguradoraNotFoundException;
+import exception.SeguradoraNotSavedException;
+import exception.UnsupportedServiceOperationException;
+import oracle.jdbc.OracleType;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class SeguradoraDaoImpl implements SeguradoraDao {
-    private final DatabaseConfig db;
 
-    public SeguradoraDaoImpl(DatabaseConfig db) {
-        this.db = db;
-    }
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Override
-    public void create(Seguradora seguradora) throws SeguradoraDaoException {
-        String sql = "INSERT INTO T_CON_SEGURADORA (ID_SEGURADORA, NM_SEGURADORA, NR_CNPJ, ID_VEICULO) VALUES (?, ?, ?, ?)";
-        try (Connection connection = db.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+    public Seguradora create(Seguradora seguradora, Connection connection) throws SeguradoraNotSavedException, SQLException, UnsupportedServiceOperationException {
+        final String sql = "BEGIN INSERT INTO T_CON_SEGURADORA(NM_SEGURADORA, NR_CNPJ, ID_VEICULO)"+
+                " VALUES(?,?,?) RETURNING ID INTO ?; END;";
+        CallableStatement call = connection.prepareCall(sql);
+        call.setString(1, seguradora.getNome());
+        call.setString(2, seguradora.getCnpj());
+        call.setLong(3, seguradora.getIdVeiculo());
+        call.registerOutParameter(4, OracleType.NUMBER);
 
-            connection.setAutoCommit(false);
-            pstmt.setInt(1, seguradora.getIdSeguradora());
-            pstmt.setString(2, seguradora.getNome());
-            pstmt.setString(3, seguradora.getCnpj());
-            pstmt.setInt(4, seguradora.getIdVeiculo());
-            pstmt.executeUpdate();
-            connection.commit();
-            connection.close();
-        } catch (SQLException e) {
-            throw new SeguradoraDaoException("Nenhum dado inserido na T_CON_SEGURADORA");
+        int linhasAlteradas = call.executeUpdate();
+        long id = call.getLong(4);
+
+        if(linhasAlteradas == 0 || id == 0){
+            throw new SeguradoraNotSavedException();
         }
+
+        return seguradora;
     }
 
     @Override
-    public List<Seguradora> readAll() throws SeguradoraDaoException {
-        List<Seguradora> result = new ArrayList<>();
-        String sql = "SELECT * FROM T_CON_SEGURADORA";
+    public List<Seguradora> readAll() {
+        final List<Seguradora> all = new ArrayList<>();
+        final String sql = "SELECT * FROM T_CON_SEGURADORA WHERE ID_SEGURADORA = ?";
+        try(Connection connection = DatabaseConnectionFactory.create().get()){
 
-        try {
-            Connection connection = db.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);
-
-            while (rs.next()) {
-                int idSeguradora = rs.getInt("ID_SEGURADORA");
-                String nome = rs.getString("NM_SEGURADORA");
-                String cnpj = rs.getString("NR_CNPJ");
-                int idVeiculo = rs.getInt("ID_VEICULO");
-
-                result.add(new Seguradora(idSeguradora, nome, cnpj, idVeiculo));
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()){
+                Seguradora seguradora = new Seguradora(
+                        resultSet.getLong("id_seguradora"),
+                        resultSet.getString("nm_seguradora"),
+                        resultSet.getString("nr_cnpj"),
+                        resultSet.getLong("id_veiculo"));
+                all.add(seguradora);
             }
-        } catch (SQLException e) {
-            throw new SeguradoraDaoException("Nenhum dado encontrado na T_CON_SEGURADORA");
+        } catch (SQLException e){
+            logger.info("Nenhum registro encontrado");
         }
-
-        return result;
+        return all;
     }
 
     @Override
-    public void update(Seguradora seguradora) throws SeguradoraDaoException {
-        String sql = "UPDATE T_CON_SEGURADORA SET NM_SEGURADORA = ?, NR_CNPJ = ?, ID_VEICULO = ? WHERE ID_SEGURADORA = ?";
-        try {
-            Connection connection = db.getConnection();
-            connection.setAutoCommit(false);
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+    public void update(Seguradora Seguradora, Connection connection) throws SeguradoraNotFoundException, SQLException {
+        final String sql = "UPDATE T_CON_SEGURADORA SET NM_SEGURADORA = ?, NR_CNPJ = ?, ID_VEICULO = ?" +
+                " WHERE ID_SEGURADORA = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, "nm_seguradora");
+        stmt.setString(2, "nr_cnpj");
+        stmt.setObject(3, "id_veiculo");
+        stmt.setObject(4, "id_veiculo");
 
-            pstmt.setString(1, seguradora.getNome());
-            pstmt.setString(2, seguradora.getCnpj());
-            pstmt.setInt(3, seguradora.getIdVeiculo());
-            pstmt.setInt(4, seguradora.getIdSeguradora());
-            pstmt.executeUpdate();
-            connection.commit();
-            connection.close();
-        } catch (SQLException e) {
-            throw new SeguradoraDaoException("Nenhum dado atualizado na T_CON_SEGURADORA");
+        int linhasAlteradas = stmt.executeUpdate();
+        if(linhasAlteradas == 0){
+            throw new SeguradoraNotFoundException();
         }
+
     }
 
     @Override
-    public void delete(int id) throws SeguradoraDaoException {
-        String sql = "DELETE FROM T_CON_SEGURADORA WHERE ID_SEGURADORA = ?";
-        try {
-            Connection connection = db.getConnection();
-            connection.setAutoCommit(false);
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+    public void deleteById(Long id, Connection connection) throws SQLException, SeguradoraNotFoundException {
+        final String sql = "DELETE FROM T_CON_SEGURADORA WHERE ID_SEGURADORA = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setLong(1, id);
 
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-
-            connection.commit();
-            connection.close();
-        } catch (SQLException e) {
-            throw new SeguradoraDaoException("Nenhum dado excluído da T_CON_SEGURADORA");
+        int linhasAlteradas = stmt.executeUpdate();
+        if(linhasAlteradas == 0){
+            throw new SeguradoraNotFoundException();
         }
+
     }
 }

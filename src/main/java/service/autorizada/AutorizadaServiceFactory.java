@@ -1,4 +1,4 @@
-package service;
+package service.autorizada;
 
 public class AutorizadaServiceFactory {
     private AutorizadaServiceFactory(){

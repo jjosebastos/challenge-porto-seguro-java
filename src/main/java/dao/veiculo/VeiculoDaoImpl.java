@@ -1,104 +1,92 @@
 package dao.veiculo;
 
-import config.DatabaseConfig;
+import config.DatabaseConnectionFactory;
 import entity.Veiculo;
-import exception.VeiculoDaoException;
+import exception.PessoaNotFoundException;
+import exception.UnsupportedServiceOperationException;
+import exception.VeiculoNotFoundException;
+import exception.VeiculoNotSavedException;
+import oracle.jdbc.OracleType;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class VeiculoDaoImpl implements VeiculoDao {
-    private final DatabaseConfig db;
 
-    public VeiculoDaoImpl(DatabaseConfig db) {
-        this.db = db;
-    }
-
+    private final Logger logger = Logger.getLogger(VeiculoDaoImpl.class.getName());
     @Override
-    public void create(Veiculo veiculo) throws VeiculoDaoException {
-        String sql = "INSERT INTO T_CON_VEICULO (ID_VEICULO, NR_PLACA, DS_MARCA, NM_MODELO, NR_CHASSI, ID_CLIENTE) VALUES (?, ?, ?, ?, ?, ?)";
-        try {
-            Connection connection = db.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+    public Veiculo create(Veiculo veiculo, Connection connection) throws UnsupportedServiceOperationException, SQLException, VeiculoNotSavedException {
+        final String sql = "BEGIN INSERT INTO (nr_placa,NR_PLACA,DS_MARCA,NM_MODELO,NR_CHASSI,ID_PESSOA)"+
+                " RETURNING ID INTO ?; END";
+        CallableStatement call = connection.prepareCall(sql);
+        call.setString(1, veiculo.getPlaca());
+        call.setString(2, veiculo.getMarca());
+        call.setString(3, veiculo.getModelo());
+        call.setString(4, veiculo.getChassi());
+        call.setLong(5, veiculo.getIdPessoa());
+        call.registerOutParameter(6, OracleType.NUMBER);
 
-            connection.setAutoCommit(false);
-            pstmt.setInt(1, veiculo.getIdVeiculo());
-            pstmt.setString(2, veiculo.getPlaca());
-            pstmt.setString(3, veiculo.getMarca());
-            pstmt.setString(4, veiculo.getModelo());
-            pstmt.setString(5, veiculo.getChassi());
-            pstmt.setInt(6, veiculo.getIdCliente());
-            pstmt.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            throw new VeiculoDaoException("Erro ao inserir dados na T_CON_VEICULO");
+        int linhasAlteradas = call.executeUpdate();
+        long id = call.getLong(6);
+        if (linhasAlteradas == 0 || id == 0){
+            throw new VeiculoNotSavedException();
         }
+        return veiculo;
     }
 
     @Override
-    public List<Veiculo> readAll() throws VeiculoDaoException {
-        List<Veiculo> result = new ArrayList<>();
-        String sql = "SELECT * FROM T_CON_VEICULO";
-
-        try {
-            Connection connection = db.getConnection();
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            while (rs.next()) {
-                int idVeiculo = rs.getInt("ID_VEICULO");
-                String placa = rs.getString("NR_PLACA");
-                String marca = rs.getString("DS_MARCA");
-                String modelo = rs.getString("NM_MODELO");
-                String chassi = rs.getString("NR_CHASSI");
-                int idCliente = rs.getInt("ID_CLIENTE");
-
-                result.add(new Veiculo(idVeiculo, placa, marca, modelo, chassi, idCliente));
+    public List<Veiculo> readAll() {
+        final List<Veiculo> all = new ArrayList<>();
+        final String sql = "SELECT * FROM T_CON_VEICULO";
+        try (Connection connection = DatabaseConnectionFactory.create().get()){
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()){
+                Veiculo veiculo = new Veiculo(
+                        resultSet.getLong("id_veiculo"),
+                        resultSet.getString("nr_placa"),
+                        resultSet.getString("ds_marca"),
+                        resultSet.getString("nm_modelo"),
+                        resultSet.getString("nr_chassi"),
+                        resultSet.getLong("id_pessoa"));
+                all.add(veiculo);
             }
-        } catch (SQLException e) {
-            throw new VeiculoDaoException("Erro ao buscar dados na T_CON_VEICULO");
+        } catch (SQLException e){
+            logger.info("Nenhum dado encontrado");
         }
-
-        return result;
+        return all;
     }
 
     @Override
-    public void update(Veiculo veiculo) throws VeiculoDaoException {
-        String sql = "UPDATE T_CON_VEICULO SET NR_PLACA = ?, DS_MARCA = ?, NM_MODELO = ?, NR_CHASSI = ?, ID_CLIENTE = ? WHERE ID_VEICULO = ?";
-        try {
-            Connection connection = db.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            connection.setAutoCommit(false);
-            pstmt.setString(1, veiculo.getPlaca());
-            pstmt.setString(2, veiculo.getMarca());
-            pstmt.setString(3, veiculo.getModelo());
-            pstmt.setString(4, veiculo.getChassi());
-            pstmt.setInt(5, veiculo.getIdCliente());
-            pstmt.setInt(6, veiculo.getIdVeiculo());
+    public Veiculo update(Veiculo veiculo, Connection connection) throws SQLException, VeiculoNotFoundException {
+        final String sql = "UPDATE T_CON_VEICULO SET NR_PLACA = ?, DS_MARCA = ?, NM_MODELO = ?, NR_CHASSI = ?, ID_PESSOA =?" +
+        " WHERE ID_VEICULO = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, veiculo.getPlaca());
+        stmt.setString(2, veiculo.getMarca());
+        stmt.setString(3, veiculo.getModelo());
+        stmt.setString(4, veiculo.getChassi());
+        stmt.setLong(5, veiculo.getIdPessoa());
+        stmt.setLong(6, veiculo.getIdVeiculo());
 
-            pstmt.executeUpdate();
-            connection.commit();
-            connection.close();
-        } catch (SQLException e) {
-            throw new VeiculoDaoException("Erro ao atualizar dados na T_CON_VEICULO");
+        int linhasAlteradas = stmt.executeUpdate();
+
+        if (linhasAlteradas == 0){
+            throw  new VeiculoNotFoundException();
         }
+        return veiculo;
     }
 
     @Override
-    public void delete(int id) throws VeiculoDaoException {
-        String sql = "DELETE FROM T_CON_VEICULO WHERE ID_VEICULO = ? CASCADE";
-        try {
-            Connection connection = db.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            connection.setAutoCommit(false);
-
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-            connection.commit();
-            connection.close();
-        } catch (SQLException e) {
-            throw new VeiculoDaoException("Erro ao excluir dados da T_CON_VEICULO");
+    public void deleteById(long id, Connection connection) throws SQLException, VeiculoNotFoundException {
+        final String sql = "DELETE FROM T_CON_VEICULO WHERE ID_VEICULO = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setLong(1, id);
+        int linhasAlteradas = stmt.executeUpdate();
+        if(linhasAlteradas == 0){
+            throw new VeiculoNotFoundException();
         }
     }
 }

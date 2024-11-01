@@ -2,15 +2,11 @@ package controller;
 
 import dtos.AutorizadaDto;
 import entity.Autorizada;
-import entity.Pessoa;
 import exception.*;
-import service.AutorizadaService;
-import service.AutorizadaServiceFactory;
-import service.PessoaService;
-import service.PessoaServiceFactory;
+import service.autorizada.AutorizadaService;
+import service.autorizada.AutorizadaServiceFactory;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;

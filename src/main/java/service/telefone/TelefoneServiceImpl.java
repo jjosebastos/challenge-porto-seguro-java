@@ -1,4 +1,4 @@
-package service;
+package service.telefone;
 
 import config.DatabaseConnectionFactory;
 import dao.telefone.TelefoneDao;
