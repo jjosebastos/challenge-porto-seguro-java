@@ -1,4 +1,4 @@
-package dao;
+package dao.veiculo;
 
 import config.DatabaseConfig;
 import entity.Veiculo;

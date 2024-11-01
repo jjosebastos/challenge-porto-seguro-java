@@ -1,62 +1,84 @@
 package entity;
 
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class HistoricoVeiculo {
 
-    private int idHistorico;
-    private LocalDate dataAquisicao;
-    private LocalDate dataVenda;
-    private Integer idCliente;
-    private Integer idVeiculo;
+    private Long idHistorico;
+    private String tipoEvento;
+    private Date dataEvento;
+    private String descricao;
+    private int kmOdometro;
+    private Long idVeiculo;
+    private Long idAutorizada;
 
-    public HistoricoVeiculo(int idHistorico, LocalDate dataAquisicao, LocalDate dataVenda, Integer idCliente, Integer idVeiculo) {
+    public HistoricoVeiculo(Long idHistorico, String tipoEvento, Date dataEvento, String descricao, int kmOdometro, Long idVeiculo, Long idAutorizada) {
         this.idHistorico = idHistorico;
-        this.dataAquisicao = dataAquisicao;
-        this.dataVenda = dataVenda;
-        this.idCliente = idCliente;
+        this.tipoEvento = tipoEvento;
+        this.dataEvento = dataEvento;
+        this.descricao = descricao;
+        this.kmOdometro = kmOdometro;
         this.idVeiculo = idVeiculo;
+        this.idAutorizada = idAutorizada;
     }
 
-    public int getIdHistorico() {
+    public Long getIdHistorico() {
         return idHistorico;
     }
 
-    public void setIdHistorico(int idHistorico) {
+    public void setIdHistorico(Long idHistorico) {
         this.idHistorico = idHistorico;
     }
 
-    public LocalDate getDataAquisicao() {
-        return dataAquisicao;
+    public String getTipoEvento() {
+        return tipoEvento;
     }
 
-    public void setDataAquisicao(LocalDate dataAquisicao) {
-        this.dataAquisicao = dataAquisicao;
+    public void setTipoEvento(String tipoEvento) {
+        this.tipoEvento = tipoEvento;
     }
 
-    public LocalDate getDataVenda() {
-        return dataVenda;
+    public Date getDataEvento() {
+        return dataEvento;
     }
 
-    public void setDataVenda(LocalDate dataVenda) {
-        this.dataVenda = dataVenda;
+    public void setDataEvento(Date dataEvento) {
+        this.dataEvento = dataEvento;
     }
 
-    public Integer getIdCliente() {
-        return idCliente;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public Integer getIdVeiculo() {
+    public int getKmOdometro() {
+        return kmOdometro;
+    }
+
+    public void setKmOdometro(int kmOdometro) {
+        this.kmOdometro = kmOdometro;
+    }
+
+    public Long getIdVeiculo() {
         return idVeiculo;
     }
 
-    public void setIdVeiculo(Integer idVeiculo) {
+    public void setIdVeiculo(Long idVeiculo) {
         this.idVeiculo = idVeiculo;
+    }
+
+    public Long getIdAutorizada() {
+        return idAutorizada;
+    }
+
+    public void setIdAutorizada(Long idAutorizada) {
+        this.idAutorizada = idAutorizada;
     }
 
     @Override
@@ -64,22 +86,25 @@ public class HistoricoVeiculo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HistoricoVeiculo that = (HistoricoVeiculo) o;
-        return idHistorico == that.idHistorico && Objects.equals(dataAquisicao, that.dataAquisicao) && Objects.equals(dataVenda, that.dataVenda) && Objects.equals(idCliente, that.idCliente) && Objects.equals(idVeiculo, that.idVeiculo);
+        return kmOdometro == that.kmOdometro && Objects.equals(idHistorico, that.idHistorico) && Objects.equals(tipoEvento, that.tipoEvento) && Objects.equals(dataEvento, that.dataEvento) && Objects.equals(descricao, that.descricao) && Objects.equals(idVeiculo, that.idVeiculo) && Objects.equals(idAutorizada, that.idAutorizada);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idHistorico, dataAquisicao, dataVenda, idCliente, idVeiculo);
+        return Objects.hash(idHistorico, tipoEvento, dataEvento, descricao, kmOdometro, idVeiculo, idAutorizada);
     }
 
     @Override
     public String toString() {
         return "HistoricoVeiculo{" +
                 "idHistorico=" + idHistorico +
-                ", dataAquisicao=" + dataAquisicao +
-                ", dataVenda=" + dataVenda +
-                ", idCliente=" + idCliente +
+                ", tipoEvento='" + tipoEvento + '\'' +
+                ", dataEvento=" + dataEvento +
+                ", descricao='" + descricao + '\'' +
+                ", kmOdometro=" + kmOdometro +
                 ", idVeiculo=" + idVeiculo +
+                ", idAutorizada=" + idAutorizada +
                 '}';
     }
 }
+

@@ -1,4 +1,4 @@
-package dao;
+package dao.seguradora;
 
 import entity.Seguradora;
 import exception.SeguradoraDaoException;

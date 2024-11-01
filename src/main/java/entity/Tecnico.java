@@ -5,13 +5,13 @@ import java.time.Period;
 import java.util.Objects;
 
 public class Tecnico {
-    private int idTecnico;
+    private Long idTecnico;
     private String nome;
     private LocalDate dataNascimento;
     private String matricula;
-    private Integer idAutorizada;
+    private Long idAutorizada;
 
-    public Tecnico(int idTecnico, String nome, LocalDate dataNascimento, String matricula, Integer idAutorizada) {
+    public Tecnico(Long idTecnico, String nome, LocalDate dataNascimento, String matricula, Long idAutorizada) {
         this.idTecnico = idTecnico;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
@@ -19,11 +19,11 @@ public class Tecnico {
         this.idAutorizada = idAutorizada;
     }
 
-    public int getIdTecnico() {
+    public Long getIdTecnico() {
         return idTecnico;
     }
 
-    public void setIdTecnico(int idTecnico) {
+    public void setIdTecnico(Long idTecnico) {
         this.idTecnico = idTecnico;
     }
 
@@ -54,11 +54,11 @@ public class Tecnico {
         this.matricula = matricula;
     }
 
-    public Integer getIdAutorizada() {
+    public Long getIdAutorizada() {
         return idAutorizada;
     }
 
-    public void setIdAutorizada(Integer idAutorizada) {
+    public void setIdAutorizada(Long idAutorizada) {
         this.idAutorizada = idAutorizada;
     }
 

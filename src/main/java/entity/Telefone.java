@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class Telefone {
 
-    private int idTelefone;
+    private Long idTelefone;
     private String numero;
     private String ddd;
     private String tipoTelefone;
-    private Integer idSeguradora;
-    private Integer idAutorizada;
-    private Integer idCliente;
+    private Long idSeguradora;
+    private Long idAutorizada;
+    private Long idCliente;
 
-    public Telefone(int idTelefone, String numero, String ddd, String tipoTelefone, Integer idSeguradora, Integer idAutorizada, Integer idCliente) {
+    public Telefone(Long idTelefone, String numero, String ddd, String tipoTelefone, Long idSeguradora, Long idAutorizada, Long idCliente) {
         this.idTelefone = idTelefone;
         setNumero(numero);
         this.ddd = ddd;
@@ -22,30 +22,18 @@ public class Telefone {
         this.idCliente = idCliente;
     }
 
-    public int getIdTelefone() {
+    public Long getIdTelefone() {
         return idTelefone;
     }
 
-    public void setIdTelefone(int idTelefone) {
+    public void setIdTelefone(Long idTelefone) {
         this.idTelefone = idTelefone;
-    }
-
-    public String getNumero() {
-        return numero;
     }
 
     public void setNumero(String numero) {
         if(isNumeroTelefoneValido(numero)){
             this.numero = numero;
         }
-    }
-
-    public String getDdd() {
-        return ddd;
-    }
-
-    public void setDdd(String ddd) {
-        this.ddd = ddd;
     }
 
     public String getTipoTelefone() {
@@ -56,29 +44,42 @@ public class Telefone {
         this.tipoTelefone = tipoTelefone;
     }
 
-    public Integer getIdSeguradora() {
+    public String getDdd() {
+        return ddd;
+    }
+
+    public void setDdd(String ddd) {
+        this.ddd = ddd;
+    }
+
+    public Long getIdSeguradora() {
         return idSeguradora;
     }
 
-    public void setIdSeguradora(Integer idSeguradora) {
+    public void setIdSeguradora(Long idSeguradora) {
         this.idSeguradora = idSeguradora;
     }
 
-    public Integer getIdAutorizada() {
+    public Long getIdAutorizada() {
         return idAutorizada;
     }
 
-    public void setIdAutorizada(Integer idAutorizada) {
+    public void setIdAutorizada(Long idAutorizada) {
         this.idAutorizada = idAutorizada;
     }
 
-    public Integer getIdCliente() {
+    public Long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(Integer idCliente) {
+    public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
     }
+
+    public String getNumero() {
+        return numero;
+    }
+
 
     public boolean isNumeroTelefoneValido(String numero){
         if(numero.length() >= 8 && numero.length() <=9){

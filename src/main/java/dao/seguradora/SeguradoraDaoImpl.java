@@ -1,4 +1,4 @@
-package dao;
+package dao.seguradora;
 
 import config.DatabaseConfig;
 import entity.Seguradora;

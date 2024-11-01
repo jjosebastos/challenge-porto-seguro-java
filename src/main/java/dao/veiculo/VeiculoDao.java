@@ -1,4 +1,4 @@
-package dao;
+package dao.veiculo;
 
 import entity.Veiculo;
 import exception.VeiculoDaoException;

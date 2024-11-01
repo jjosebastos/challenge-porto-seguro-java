@@ -17,7 +17,7 @@ public class AutorizadaServiceImpl implements AutorizadaService {
     private final AutorizadaDao dao = AutorizadaDaoFactory.create();
 
     @Override
-    public Autorizada create(Autorizada autorizada) throws UnsupportedServiceOperationException, SQLException, AutorizadaNotSavedException {
+    public Autorizada create(Autorizada autorizada) throws AutorizadaNotSavedException, SQLException, UnsupportedServiceOperationException  {
         if(autorizada.getIdAutorizada() == null){
             Connection connection = DatabaseConnectionFactory.create().get();
             try {
@@ -50,6 +50,6 @@ public class AutorizadaServiceImpl implements AutorizadaService {
     @Override
     public void deleteById(Long id) throws AutorizadaNotFoundException, SQLException {
         Connection connection = DatabaseConnectionFactory.create().get();
-        this.dao.deleteById(id, connection);;
+        this.dao.deleteById(id, connection);
     }
 }
