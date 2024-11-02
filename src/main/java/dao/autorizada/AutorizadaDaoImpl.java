@@ -70,7 +70,7 @@ public class AutorizadaDaoImpl implements AutorizadaDao {
     }
 
     @Override
-    public void deleteById(Long id, Connection connection) throws AutorizadaNotFoundException, SQLException {
+    public void deleteById(long id, Connection connection) throws AutorizadaNotFoundException, SQLException {
         final String sql = "delete from t_con_autorizada where id_pessoa = ?";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setLong(1, id);

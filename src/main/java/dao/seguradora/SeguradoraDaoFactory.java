@@ -8,7 +8,7 @@ public class SeguradoraDaoFactory {
 
     }
 
-    public AutorizadaDao create(){
-        return new AutorizadaDaoImpl();
+    public static SeguradoraDao create(){
+        return new SeguradoraDaoImpl();
     }
 }

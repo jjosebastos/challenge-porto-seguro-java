@@ -6,5 +6,4 @@ public class PagamentoDaoFactory {
     public static PagamentoDao create() {
         return new PagamentoDaoImpl();
     }
-
 }

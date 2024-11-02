@@ -4,37 +4,37 @@ import java.util.Objects;
 
 public class Endereco {
 
-    private int idEndereco;
+    private Long idEndereco;
     private String rua;
-    private String numeroCasa;
+    private String numero;
     private String bairro;
     private String cidade;
     private String uf;
-    private String complemento;
-    private Integer idCliente;
-    private Integer idSeguradora;
-    private Integer idAutorizada;
     private String cep;
+    private String complemento;
+    private Long idCliente;
+    private Long idSeguradora;
+    private Long idAutorizada;
 
-    public Endereco(int idEndereco, String rua, String numeroCasa, String bairro, String cidade, String uf, String complemento, Integer idCliente, Integer idSeguradora, Integer idAutorizada, String cep) {
+    public Endereco(Long idEndereco, String rua, String numero, String bairro, String cidade, String uf, String cep, String complemento, Long idCliente, Long idSeguradora, Long idAutorizada) {
         this.idEndereco = idEndereco;
         this.rua = rua;
-        this.numeroCasa = numeroCasa;
+        this.numero = numero;
         this.bairro = bairro;
         this.cidade = cidade;
         this.uf = uf;
+        setCep(cep);
         this.complemento = complemento;
         this.idCliente = idCliente;
         this.idSeguradora = idSeguradora;
         this.idAutorizada = idAutorizada;
-        setCep(cep);
     }
 
-    public int getIdEndereco() {
+    public Long getIdEndereco() {
         return idEndereco;
     }
 
-    public void setIdEndereco(int idEndereco) {
+    public void setIdEndereco(Long idEndereco) {
         this.idEndereco = idEndereco;
     }
 
@@ -46,12 +46,12 @@ public class Endereco {
         this.rua = rua;
     }
 
-    public String getNumeroCasa() {
-        return numeroCasa;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setNumeroCasa(String numeroCasa) {
-        this.numeroCasa = numeroCasa;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     public String getBairro() {
@@ -78,14 +78,6 @@ public class Endereco {
         this.uf = uf;
     }
 
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
     public String getCep() {
         return cep;
     }
@@ -98,27 +90,35 @@ public class Endereco {
         }
     }
 
-    public Integer getIdCliente() {
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public Long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(Integer idCliente) {
+    public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
     }
 
-    public Integer getIdSeguradora() {
+    public Long getIdSeguradora() {
         return idSeguradora;
     }
 
-    public void setIdSeguradora(Integer idSeguradora) {
+    public void setIdSeguradora(Long idSeguradora) {
         this.idSeguradora = idSeguradora;
     }
 
-    public Integer getIdAutorizada() {
+    public Long getIdAutorizada() {
         return idAutorizada;
     }
 
-    public void setIdAutorizada(Integer idAutorizada) {
+    public void setIdAutorizada(Long idAutorizada) {
         this.idAutorizada = idAutorizada;
     }
 
@@ -127,32 +127,32 @@ public class Endereco {
     }
 
     @Override
-    public String toString() {
-        return "Endereco{" +
-                "idEndereco=" + idEndereco +
-                ", rua='" + rua + '\'' +
-                ", numeroCasa='" + numeroCasa + '\'' +
-                ", bairro='" + bairro + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", uf='" + uf + '\'' +
-                ", complemento='" + complemento + '\'' +
-                ", idCliente=" + idCliente +
-                ", idSeguradora=" + idSeguradora +
-                ", idAutorizada=" + idAutorizada +
-                ", cep='" + cep + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Endereco endereco = (Endereco) o;
-        return idEndereco == endereco.idEndereco && Objects.equals(rua, endereco.rua) && Objects.equals(numeroCasa, endereco.numeroCasa) && Objects.equals(bairro, endereco.bairro) && Objects.equals(cidade, endereco.cidade) && Objects.equals(uf, endereco.uf) && Objects.equals(complemento, endereco.complemento) && Objects.equals(idCliente, endereco.idCliente) && Objects.equals(idSeguradora, endereco.idSeguradora) && Objects.equals(idAutorizada, endereco.idAutorizada) && Objects.equals(cep, endereco.cep);
+        return Objects.equals(idEndereco, endereco.idEndereco) && Objects.equals(rua, endereco.rua) && Objects.equals(numero, endereco.numero) && Objects.equals(bairro, endereco.bairro) && Objects.equals(cidade, endereco.cidade) && Objects.equals(uf, endereco.uf) && Objects.equals(cep, endereco.cep) && Objects.equals(complemento, endereco.complemento) && Objects.equals(idCliente, endereco.idCliente) && Objects.equals(idSeguradora, endereco.idSeguradora) && Objects.equals(idAutorizada, endereco.idAutorizada);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEndereco, rua, numeroCasa, bairro, cidade, uf, complemento, idCliente, idSeguradora, idAutorizada, cep);
+        return Objects.hash(idEndereco, rua, numero, bairro, cidade, uf, cep, complemento, idCliente, idSeguradora, idAutorizada);
+    }
+
+    @Override
+    public String toString() {
+        return "Endereco{" +
+                "idEndereco=" + idEndereco +
+                ", rua='" + rua + '\'' +
+                ", numero='" + numero + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", cidade='" + cidade + '\'' +
+                ", uf='" + uf + '\'' +
+                ", cep='" + cep + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", idCliente=" + idCliente +
+                ", idSeguradora=" + idSeguradora +
+                ", idAutorizada=" + idAutorizada +
+                '}';
     }
 }

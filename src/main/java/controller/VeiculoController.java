@@ -5,14 +5,12 @@ import dao.veiculo.VeiculoDaoFactory;
 import dtos.VeiculoDto;
 import entity.Veiculo;
 import exception.UnsupportedServiceOperationException;
+import exception.VeiculoNotFoundException;
 import exception.VeiculoNotSavedException;
 import service.veiculo.VeiculoService;
 import service.veiculo.VeiculoServiceFactory;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -27,21 +25,60 @@ public class VeiculoController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("")
-    public Response add(VeiculoDto input){
+    public Response add(VeiculoDto input) throws UnsupportedServiceOperationException{
         if(input.getIdVeiculo() == null){
             try {
                 Veiculo veiculo = this.service.create(new Veiculo(null, input.getPlaca(), input.getMarca(), input.getModelo(), input.getChassi(), input.getIdPessoa()));
                 return Response.status(Response.Status.OK).entity(veiculo).build();
             } catch (SQLException | VeiculoNotSavedException e) {
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity(Map.of("mensagem","não foi possível inserir imagem"
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity(Map.of("mensagem", "erro inesperado ao inserir veiculo"
                         )).build();
-            } catch (UnsupportedServiceOperationException e){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Map.of(
-                        "mensagem","erro inesperado ao tentar inserir pessoa"
-                )).build();
             }
 
+        } else  {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Map.of(
+                    "mensagem","erro inesperado ao tentar inserir pessoa"
+            )).build();
+        }
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update(@PathParam("id") Long id, VeiculoDto input){
+        try {
+            Veiculo updated = this.service.update(new Veiculo(null, input.getPlaca(), input.getMarca(), input.getModelo(), input.getChassi(), input.getIdPessoa()));
+            return Response.status(Response.Status.OK).entity(updated).build();
+        } catch (VeiculoNotFoundException v){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (SQLException s){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(Map.of("mensagem", "erro inesperado ao atualizar veiculo")).build();
+        }
+    }
+
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAll(){
+        return Response.status(Response.Status.OK)
+                .entity(service.findAll()).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response delete(@PathParam("id") Long id){
+        try {
+            this.service.deleteById(id);
+            return Response.status(Response.Status.NO_CONTENT).build();
+        } catch (VeiculoNotFoundException v){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (SQLException s){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(Map.of("mensagem", "erro inesperado ao deletar veiculo")).build();
         }
     }
 

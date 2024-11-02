@@ -11,16 +11,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface EnderecoDao {
-
-    //TODO: CREATE
-    Endereco create(Endereco endereco, Connection connection) throws UnsupportedServiceOperationException, SQLException, EnderecoNotSavedException;
-
-    //TODO: READ
+    Endereco save(Endereco endereco, Connection connection) throws UnsupportedServiceOperationException, SQLException, EnderecoNotSavedException;
     List<Endereco> readAll();
-
-    //TODO: UPDATE
-    void update(Endereco endereco, Connection connection) throws SQLException, EnderecoNotFoundException;
-
-    //TODO: DELETE
-    void delete(int id, Connection connection) throws SQLException, EnderecoNotFoundException;
+    Endereco update(Endereco endereco, Connection connection) throws SQLException, EnderecoNotFoundException;
+    void deleteById(long id, Connection connection) throws SQLException, EnderecoNotFoundException;
 }

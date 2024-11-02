@@ -61,7 +61,7 @@ public class SeguradoraDaoImpl implements SeguradoraDao {
     }
 
     @Override
-    public void update(Seguradora Seguradora, Connection connection) throws SeguradoraNotFoundException, SQLException {
+    public Seguradora update(Seguradora seguradora, Connection connection) throws SeguradoraNotFoundException, SQLException {
         final String sql = "UPDATE T_CON_SEGURADORA SET NM_SEGURADORA = ?, NR_CNPJ = ?, ID_VEICULO = ?" +
                 " WHERE ID_SEGURADORA = ?";
         PreparedStatement stmt = connection.prepareStatement(sql);
@@ -74,7 +74,7 @@ public class SeguradoraDaoImpl implements SeguradoraDao {
         if(linhasAlteradas == 0){
             throw new SeguradoraNotFoundException();
         }
-
+        return seguradora;
     }
 
     @Override

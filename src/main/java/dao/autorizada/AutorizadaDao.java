@@ -13,5 +13,5 @@ public interface AutorizadaDao {
     Autorizada save (Autorizada autorizada, Connection connection) throws AutorizadaNotSavedException, SQLException;
     List<Autorizada> readAll() ;
     Autorizada update(Autorizada Autorizada, Connection connection) throws AutorizadaNotFoundException, SQLException;
-    void deleteById(Long id, Connection connection) throws AutorizadaNotFoundException, SQLException;
+    void deleteById(long id, Connection connection) throws AutorizadaNotFoundException, SQLException;
 }

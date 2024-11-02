@@ -34,14 +34,14 @@ public class PessoaController {
                         .build();
 
             } catch (SQLException | PessoaNotSavedException e){
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity(Map.of("mensagem", "esse método só permite a inserção de novas pessoas")).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity(Map.of("mensagem", "erro inesperado ao tentar inserir pessoa")).build();
             }
         } else {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(Map.of(
                         "mensagem",
-                    "erro inesperado ao tentar inserir pessoa"))
+                    "esse método só permite a criação de novas pessoas"))
                     .build();
         }
     }

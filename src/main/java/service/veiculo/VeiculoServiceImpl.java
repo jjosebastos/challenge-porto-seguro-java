@@ -17,7 +17,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 
     @Override
     public Veiculo create(Veiculo veiculo) throws SQLException, VeiculoNotSavedException, UnsupportedServiceOperationException {
-        if(veiculo.getIdVeiculo() == 0){
+        if(veiculo.getIdVeiculo() == null){
             Connection connection = DatabaseConnectionFactory.create().get();
             try {
                 veiculo = this.dao.create(veiculo,connection);

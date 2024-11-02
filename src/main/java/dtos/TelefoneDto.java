@@ -5,9 +5,9 @@ public class TelefoneDto {
     private String numero;
     private String ddd;
     private String tipoTelefone;
+    private Long idPessoa;
     private Long idSeguradora;
     private Long idAutorizada;
-    private Long idCliente;
 
     public Long getIdTelefone() {
         return idTelefone;
@@ -41,6 +41,14 @@ public class TelefoneDto {
         this.tipoTelefone = tipoTelefone;
     }
 
+    public Long getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(Long idPessoa) {
+        this.idPessoa = idPessoa;
+    }
+
     public Long getIdSeguradora() {
         return idSeguradora;
     }
@@ -55,13 +63,5 @@ public class TelefoneDto {
 
     public void setIdAutorizada(Long idAutorizada) {
         this.idAutorizada = idAutorizada;
-    }
-
-    public Long getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
     }
 }

@@ -17,7 +17,7 @@ public class AutorizadaController {
 
 private final AutorizadaService autorizadaService = AutorizadaServiceFactory.create();
 
-    @GET
+    @POST
     @Path("")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -44,31 +44,6 @@ private final AutorizadaService autorizadaService = AutorizadaServiceFactory.cre
 
     }
 
-    @GET
-    @Path("/all")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll(){
-        return Response.status(Response.Status.OK)
-                .entity(this.autorizadaService.findAll())
-                .build();
-    }
-
-    @DELETE
-    @Path("/{id}")
-    public Response delete(@PathParam("id") Long id){
-        try {
-            this.autorizadaService.deleteById(id);
-            return Response.status(Response.Status.NO_CONTENT)
-                    .build();
-        } catch (AutorizadaNotFoundException e){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } catch (SQLException s) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(Map.of("mensagem", "erro inesperado ao excluir em T_CON_AUTORIZADA")).build();
-        }
-
-    }
-
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -87,4 +62,33 @@ private final AutorizadaService autorizadaService = AutorizadaServiceFactory.cre
                     .entity(Map.of("mensagem", "erro inesperado ao atualizar em autorizada")).build();
         }
     }
+
+
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll(){
+        return Response.status(Response.Status.OK)
+                .entity(this.autorizadaService.findAll())
+                .build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response delete(@PathParam("id") Long id){
+        try {
+            this.autorizadaService.deleteById(id);
+            return Response.status(Response.Status.NO_CONTENT)
+                    .build();
+        } catch (AutorizadaNotFoundException e){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (SQLException s) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(Map.of("mensagem", "erro inesperado ao excluir em T_CON_AUTORIZADA")).build();
+        }
+
+    }
+
+
 }

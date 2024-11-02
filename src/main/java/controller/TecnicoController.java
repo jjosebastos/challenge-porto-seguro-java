@@ -39,9 +39,29 @@ public class TecnicoController {
             return Response.status(Response.Status.BAD_REQUEST)
                 .entity(Map.of(
                         "mensagem",
-                        "esse método só permite criação de novas pessoas"
+                        "esse método só permite criação de novas tecnicos"
                 )).build();
 
+        }
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update(@PathParam("id") Long id, TecnicoDto input){
+        try {
+            Tecnico update = this.tecnicoService.update(new Tecnico(id, input.getNome(),
+                    input.getDataNascimento(), input.getMatricula(), input.getIdAutorizada()));
+            return Response.status(Response.Status.OK).entity(update).build();
+        } catch (TecnicoNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (SQLException e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(Map.of(
+                            "mensagem",
+                            "erro inesperado ao"
+                    )).build();
         }
     }
 
@@ -71,23 +91,5 @@ public class TecnicoController {
         }
     }
 
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam("id") Long id, TecnicoDto input){
-        try {
-            Tecnico update = this.tecnicoService.update(new Tecnico(id, input.getNome(),
-                    input.getDataNascimento(), input.getMatricula(), input.getIdAutorizada()));
-            return Response.status(Response.Status.OK).entity(update).build();
-        } catch (TecnicoNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        } catch (SQLException e){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(Map.of(
-                            "mensagem",
-                            "erro inesperado ao"
-                    )).build();
-        }
-    }
+
 }
